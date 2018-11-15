@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.SirTobiSwobi.c3.c3committee.api.TCConfiguration;
+import org.SirTobiSwobi.c3.c3committee.core.Utilities;
 import org.SirTobiSwobi.c3.c3committee.db.Configuration;
 import org.SirTobiSwobi.c3.c3committee.db.ReferenceHub;
 import org.SirTobiSwobi.c3.c3committee.db.SelectionPolicy;
@@ -67,7 +68,8 @@ public class ConfigurationResource {
 								configuration.getFolds(),
 								configuration.isIncludeImplicits(),
 								configuration.getAssignmentThreshold(),
-								selectionPolicy));
+								selectionPolicy,
+								Utilities.buildAthletes(configuration.getAthletes())));
 		Response response = Response.ok().build();
 		return response;
 	}
@@ -102,7 +104,8 @@ public class ConfigurationResource {
 						configuration.getFolds(),
 						configuration.isIncludeImplicits(), 
 						configuration.getAssignmentThreshold(),
-						selectionPolicy
+						selectionPolicy,
+						Utilities.buildTcAthletes(configuration.getAthletes())
 						);	
 		return output;
 	}

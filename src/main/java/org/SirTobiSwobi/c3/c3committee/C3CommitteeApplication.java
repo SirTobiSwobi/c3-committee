@@ -4,6 +4,7 @@ import javax.ws.rs.client.Client;
 
 import org.SirTobiSwobi.c3.c3committee.core.Classifier;
 import org.SirTobiSwobi.c3.c3committee.core.Trainer;
+import org.SirTobiSwobi.c3.c3committee.db.Athlete;
 import org.SirTobiSwobi.c3.c3committee.db.CategorizationManager;
 import org.SirTobiSwobi.c3.c3committee.db.Category;
 import org.SirTobiSwobi.c3.c3committee.db.CategoryManager;
@@ -153,6 +154,11 @@ public class C3CommitteeApplication extends Application<C3CommitteeConfiguration
 		environment.jersey().register(categorizations);
 		environment.jersey().register(retraining);
 		
+		Athlete[] athletes = new Athlete[2];
+		athletes[0]=new Athlete(0,"http://localhost:8082/","tfidf-svm classifier using default configuration");
+		athletes[1]=new Athlete(1,"http://localhost:8084/","ntfc using default configuration");
+		Configuration cfgn = new Configuration(1,3, true, 0.5,SelectionPolicy.MicroaverageF1, athletes);
+		confMan.setConfiguration(cfgn);
 		
 		if(configuration.getDebugExamples().equals("true")){
 			/*
@@ -215,12 +221,7 @@ public class C3CommitteeApplication extends Application<C3CommitteeConfiguration
 			tfMan.setAssignment(4, 4, 525);
 			
 		
-			Configuration cfgn = new Configuration(1,2, true, 0.5,SelectionPolicy.MicroaverageF1);
-			confMan.setConfiguration(cfgn);
-			cfgn = new Configuration(3,3, true, 0.6,SelectionPolicy.MacroaverageF1);
-			confMan.setConfiguration(cfgn);
-			cfgn = new Configuration(5,5, true, 0.4,SelectionPolicy.MicroaverageRecall);
-			confMan.setConfiguration(cfgn);
+			
 		}
 	
 		

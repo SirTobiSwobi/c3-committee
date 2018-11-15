@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.SirTobiSwobi.c3</groupId>
   <artifactId>c3-committee</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>c3-committee</name>
   <description>committee classifier trainer athlete implementation that is using other classifiers implementing the c3 classifier-trainer API.</description>
   <properties>
@@ -59,7 +59,7 @@
   						<transformers>
   							<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
   							<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-  								<mainClass>org.SirTobiSwobi.c3.c3committee.ClassifierTrainerApplication</mainClass>
+  								<mainClass>org.SirTobiSwobi.c3.c3committee.C3CommitteeApplication</mainClass>
   							</transformer>
   						</transformers>
   					</configuration>

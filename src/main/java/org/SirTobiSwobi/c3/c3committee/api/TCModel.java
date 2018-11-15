@@ -8,18 +8,20 @@ public class TCModel {
 	private double progress;
 	private String trainingLog;
 	private TCConfiguration configuration;
+	private double[] weights;
 	
 	public TCModel(){
 		//Jackson deserialization
 	}
 
-	public TCModel(long id, long configurationId, double progress, String trainingLog, TCConfiguration configuration) {
+	public TCModel(long id, long configurationId, double progress, String trainingLog, TCConfiguration configuration, double[] weights) {
 		super();
 		this.id = id;
 		this.configurationId = configurationId;
 		this.progress = progress;
 		this.trainingLog = trainingLog;
 		this.configuration = configuration;
+		this.weights = weights;
 	}
 	
 	@JsonProperty
@@ -46,5 +48,10 @@ public class TCModel {
 	public TCConfiguration getConfiguration() {
 		return configuration;
 	}
-	
+
+	@JsonProperty
+	public double[] getWeights() {
+		return weights;
+	}
+		
 }

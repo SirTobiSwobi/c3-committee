@@ -2,7 +2,9 @@ package org.SirTobiSwobi.c3.c3committee.core;
 
 import java.util.ArrayList;
 
+import org.SirTobiSwobi.c3.c3committee.api.TCAthlete;
 import org.SirTobiSwobi.c3.c3committee.db.Assignment;
+import org.SirTobiSwobi.c3.c3committee.db.Athlete;
 
 public class Utilities {
 	
@@ -181,6 +183,22 @@ public class Utilities {
 		text = text.replaceAll("\\s{2,}", " ").trim();
 		text = text.toLowerCase();
 		return text;
+	}
+	
+	public static TCAthlete[] buildTcAthletes(Athlete[] athletes){
+		TCAthlete[] tcAthletes = new TCAthlete[athletes.length];
+		for(int i=0;i<athletes.length;i++){
+			tcAthletes[i]=new TCAthlete(athletes[i].getId(), athletes[i].getUrl(), athletes[i].getDescription());
+		}
+		return tcAthletes;
+	}
+	
+	public static Athlete[] buildAthletes(TCAthlete[] tcAthletes){
+		Athlete[] athletes = new Athlete[tcAthletes.length];
+		for(int i=0;i<athletes.length;i++){
+			athletes[i] = new Athlete(tcAthletes[i].getId(), tcAthletes[i].getUrl(), tcAthletes[i].getDescription());
+		}
+		return athletes;
 	}
 	
 }

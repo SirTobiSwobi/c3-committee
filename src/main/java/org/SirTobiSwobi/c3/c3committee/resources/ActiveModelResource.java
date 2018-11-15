@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import org.SirTobiSwobi.c3.c3committee.api.TCConfiguration;
 import org.SirTobiSwobi.c3.c3committee.api.TCModel;
+import org.SirTobiSwobi.c3.c3committee.core.Utilities;
 import org.SirTobiSwobi.c3.c3committee.db.Configuration;
 import org.SirTobiSwobi.c3.c3committee.db.Model;
 import org.SirTobiSwobi.c3.c3committee.db.ReferenceHub;
@@ -91,8 +92,8 @@ public class ActiveModelResource {
 					selectionPolicy=SelectionPolicy.MacroaverageRecall;
 				}
 				Configuration conf = new Configuration(configuration.getId(), configuration.getFolds(), configuration.isIncludeImplicits(), configuration.getAssignmentThreshold(),
-						selectionPolicy);
-				Model activeModel = new Model(retrievedModel.getId(), conf, retrievedModel.getTrainingLog());
+						selectionPolicy, Utilities.buildAthletes(configuration.getAthletes()));
+				Model activeModel = new Model(retrievedModel.getId(), conf, retrievedModel.getTrainingLog(), retrievedModel.getWeights());
 				refHub.setActiveModel(activeModel);
 			}catch(Exception e){
 				return Response.status(404).build();
@@ -116,8 +117,8 @@ public class ActiveModelResource {
 				selectionPolicy=SelectionPolicy.MacroaverageRecall;
 			}
 			Configuration conf = new Configuration(configuration.getId(), configuration.getFolds(), configuration.isIncludeImplicits(), configuration.getAssignmentThreshold(),
-					selectionPolicy);
-			Model activeModel = new Model(model.getId(), conf, model.getTrainingLog());
+					selectionPolicy, Utilities.buildAthletes(configuration.getAthletes()));
+			Model activeModel = new Model(model.getId(), conf, model.getTrainingLog(), model.getWeights());
 			refHub.setActiveModel(activeModel);
 			refHub.setNeedsRetraining(false);
 			return Response.ok().build();

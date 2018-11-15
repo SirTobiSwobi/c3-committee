@@ -7,6 +7,7 @@ public class Model {
 	private int completed;
 	private String trainingLog; //for API development purposed. Optional for actual model. Stores progress of the training.
 	private Configuration configuration;
+	private double[] weights;
 	
 	public Model(long id, Configuration configuration) {
 		super();
@@ -19,7 +20,7 @@ public class Model {
 		
 	}
 	
-	public Model(long id, Configuration configuration, String trainingLog) {
+	public Model(long id, Configuration configuration, String trainingLog, double[] weights) {
 		super();
 		this.id = id;
 		this.configuration = configuration;
@@ -27,7 +28,7 @@ public class Model {
 		this.trainingLog=trainingLog;
 		this.steps=10; //only used for active Model when put there. Training progress is always completed.
 		this.completed=10; //only used for active Model when put there. Training progress is always completed.
-		
+		this.weights = weights;
 	}
 	
 
@@ -85,8 +86,12 @@ public class Model {
 		this.configuration = configuration;
 	}
 
-	
-	
-	
+	public double[] getWeights() {
+		return weights;
+	}
+
+	public void setWeights(double[] weights) {
+		this.weights = weights;
+	}	
 	
 }

@@ -12,6 +12,7 @@ public class Configuration {
 	private boolean includeImplicits;
 	private double assignmentThreshold;
 	private SelectionPolicy selectionPolicy;
+	private Athlete[] athletes;
 
 	
 	public Configuration(long id) {
@@ -32,13 +33,14 @@ public class Configuration {
 	
 
 	public Configuration(long id, int folds, boolean includeImplicits, double assignmentThreshold,
-			SelectionPolicy selectionPolicy) {
+			SelectionPolicy selectionPolicy, Athlete[] athletes) {
 		super();
 		this.id = id;
 		this.folds = folds;
 		this.includeImplicits = includeImplicits;
 		this.assignmentThreshold = assignmentThreshold;
 		this.selectionPolicy = selectionPolicy;
+		this.athletes = athletes;
 	}
 
 	public Configuration() {
@@ -87,6 +89,16 @@ public class Configuration {
 
 	public void setSelectionPolicy(SelectionPolicy selectionPolicy) {
 		this.selectionPolicy = selectionPolicy;
+	}
+
+	public Athlete[] getAthletes() {
+		return athletes;
+	}
+
+	public void setAthletes(Athlete[] athletes) {
+		this.athletes = athletes;
 	}	
+	
+	
 
 }

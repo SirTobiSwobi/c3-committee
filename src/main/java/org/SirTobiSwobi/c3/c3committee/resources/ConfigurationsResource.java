@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import org.SirTobiSwobi.c3.c3committee.api.TCConfiguration;
 import org.SirTobiSwobi.c3.c3committee.api.TCConfigurations;
 import org.SirTobiSwobi.c3.c3committee.api.TCHash;
+import org.SirTobiSwobi.c3.c3committee.core.Utilities;
 import org.SirTobiSwobi.c3.c3committee.db.Configuration;
 import org.SirTobiSwobi.c3.c3committee.db.ConfigurationManager;
 import org.SirTobiSwobi.c3.c3committee.db.ReferenceHub;
@@ -59,7 +60,8 @@ public class ConfigurationsResource {
 						confArray[i].getFolds(),
 						confArray[i].isIncludeImplicits(), 
 						confArray[i].getAssignmentThreshold(),
-						selectionPolicy
+						selectionPolicy,
+						Utilities.buildTcAthletes(confArray[i].getAthletes())
 						);
 			}
 			TCConfigurations output = new TCConfigurations(outputArray);
@@ -93,10 +95,12 @@ public class ConfigurationsResource {
 				}
 				if(conf.getId()>=0){
 					
-					Configuration config = new Configuration(conf.getId(), conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(),selectionPolicy);
+					Configuration config = new Configuration(conf.getId(), conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(),selectionPolicy,
+							Utilities.buildAthletes(conf.getAthletes()));
 					refHub.getConfigurationManager().setConfiguration(config);
 				}else{			
-					refHub.getConfigurationManager().addConfigurationWithoutId(conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(), selectionPolicy);;
+					refHub.getConfigurationManager().addConfigurationWithoutId(conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(), selectionPolicy,
+							Utilities.buildAthletes(conf.getAthletes()));
 				}
 			}
 		}

@@ -45,7 +45,7 @@ public class ModelsResource {
 			for(int i=0; i<models.length;i++){
 				Model mod = models[i];
 				TCConfiguration config = ConfigurationResource.buildTCConfiguration(mod.getConfiguration());
-				TCModel TCmod = new TCModel(mod.getId(),mod.getConfiguration().getId(), mod.getProgress(), mod.getTrainingLog(), config);
+				TCModel TCmod = new TCModel(mod.getId(),mod.getConfiguration().getId(), mod.getProgress(), mod.getTrainingLog(), config, mod.getWeights());
 				TCmodelArray[i]=TCmod;
 			}
 			TCModels TCmodels;

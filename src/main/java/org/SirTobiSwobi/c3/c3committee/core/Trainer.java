@@ -3,6 +3,8 @@ package org.SirTobiSwobi.c3.c3committee.core;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.ws.rs.client.Client;
+
 import org.SirTobiSwobi.c3.c3committee.db.Assignment;
 import org.SirTobiSwobi.c3.c3committee.db.Category;
 import org.SirTobiSwobi.c3.c3committee.db.Configuration;
@@ -18,6 +20,7 @@ public class Trainer {
 	private long trainingSessionId;
 	private long modelId;
 	private long configId;
+	private Client client;
 	
 	public Trainer(ReferenceHub refHub) {
 		super();
@@ -173,4 +176,18 @@ public class Trainer {
 			refHub.getModelManager().setTrainingInProgress(false);
 		}
 	}
+
+
+
+	public Client getClient() {
+		return client;
+	}
+
+
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	
 }

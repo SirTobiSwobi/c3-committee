@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.SirTobiSwobi.c3.c3committee.api.TCAthlete;
 import org.SirTobiSwobi.c3.c3committee.api.TCConfiguration;
 import org.SirTobiSwobi.c3.c3committee.api.TCModel;
 import org.SirTobiSwobi.c3.c3committee.api.TCProgress;
@@ -78,9 +79,13 @@ public class ModelResource {
 		}else if(conf.getSelectionPolicy()==SelectionPolicy.MacroaverageRecall){
 			selectionPolicy="MacroaverageRecall";
 		}
+		TCAthlete[] athletes = new TCAthlete[conf.getAthletes().length];
+		for(int i=0;i<athletes.length;i++){
+			athletes[i]=new TCAthlete(conf.getAthletes()[i].getId(),conf.getAthletes()[i].getUrl(),conf.getAthletes()[i].getDescription());
+		}
 		TCConfiguration configuration = new TCConfiguration(conf.getId(), conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(),
-				selectionPolicy);
-		TCModel output = new TCModel(model.getId(), model.getConfiguration().getId(), model.getProgress(), model.getTrainingLog(), configuration);
+				selectionPolicy, athletes);
+		TCModel output = new TCModel(model.getId(), model.getConfiguration().getId(), model.getProgress(), model.getTrainingLog(), configuration, model.getWeights());
 		return output;
 	}
 }

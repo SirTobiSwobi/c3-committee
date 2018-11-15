@@ -9,3 +9,4 @@ Or you can just run the Docker container including everything necessary.
 Version change log:
 
 - 0.0.1: copied API using classifier-trainer v1.0.7
+- 0.0.2: updated API for /configurations, /models, and /model

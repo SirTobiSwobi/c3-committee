@@ -9,16 +9,18 @@ public class TCConfiguration {
 	private boolean includeImplicits;
 	private double assignmentThreshold;
 	private String selectionPolicy;
+	private TCAthlete[] athletes;
 	
 
 	public TCConfiguration(long id, int folds, boolean includeImplicits, double assignmentThreshold,
-			String selectionPolicy) {
+			String selectionPolicy, TCAthlete[] athletes) {
 		super();
 		this.id = id;
 		this.folds = folds;
 		this.includeImplicits = includeImplicits;
 		this.assignmentThreshold = assignmentThreshold;
 		this.selectionPolicy = selectionPolicy;
+		this.athletes = athletes;
 	}
 
 
@@ -51,4 +53,11 @@ public class TCConfiguration {
 	public String getSelectionPolicy() {
 		return selectionPolicy;
 	}
+
+	@JsonProperty
+	public TCAthlete[] getAthletes() {
+		return athletes;
+	}
+	
+	
 }
