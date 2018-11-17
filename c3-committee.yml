@@ -61,6 +61,6 @@ debugExamples: false
 #Jersey client settings
 jerseyClient:
   #The maximum idle time for a connection
-  timeout: 512 ms
+  timeout: 10000 ms
   #Work queue size for each client thread. Additional threads only spawn if the queue exceeds this.
   workQueueSize: 16

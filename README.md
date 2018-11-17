@@ -10,3 +10,4 @@ Version change log:
 
 - 0.0.1: copied API using classifier-trainer v1.0.7
 - 0.0.2: updated API for /configurations, /models, and /model
+- 0.0.3: implemented training using external athletes

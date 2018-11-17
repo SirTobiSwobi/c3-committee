@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.SirTobiSwobi.c3.c3committee.api.TCAthlete;
 import org.SirTobiSwobi.c3.c3committee.db.Assignment;
 import org.SirTobiSwobi.c3.c3committee.db.Athlete;
+import org.SirTobiSwobi.c3.c3committee.db.Document;
 
 public class Utilities {
 	
@@ -199,6 +200,28 @@ public class Utilities {
 			athletes[i] = new Athlete(tcAthletes[i].getId(), tcAthletes[i].getUrl(), tcAthletes[i].getDescription());
 		}
 		return athletes;
+	}
+	
+	public static String buildDocumentJSON(Document document){
+		String json="{";
+		json+="\t\"id\":"+document.getId()+",";
+		json+="\t\"label\":\""+document.getLabel()+"\",";
+		json+="\t\"content\":\""+document.getContent()+"\",";
+		json+="\t\"url\":\"\"";
+		json+="}";	
+		return json;
+	}
+	
+	public static double[] normalizeVector(double[] vector){
+		double norm=0.0;
+		for(int i=0;i<vector.length;i++){
+			norm+=vector[i]*vector[i];
+		}
+		norm=Math.sqrt(norm);
+		for(int i=0;i<vector.length;i++){
+			vector[i]=vector[i]/norm;
+		}
+		return vector;
 	}
 	
 }

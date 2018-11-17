@@ -5,7 +5,9 @@ import java.util.Arrays;
 
 import javax.ws.rs.client.Client;
 
+import org.SirTobiSwobi.c3.c3committee.C3CommitteeConfiguration;
 import org.SirTobiSwobi.c3.c3committee.db.Assignment;
+import org.SirTobiSwobi.c3.c3committee.db.Categorization;
 import org.SirTobiSwobi.c3.c3committee.db.Category;
 import org.SirTobiSwobi.c3.c3committee.db.Configuration;
 import org.SirTobiSwobi.c3.c3committee.db.Evaluation;
@@ -14,13 +16,16 @@ import org.SirTobiSwobi.c3.c3committee.db.ReferenceHub;
 import org.SirTobiSwobi.c3.c3committee.db.SelectionPolicy;
 import org.SirTobiSwobi.c3.c3committee.db.TrainingSession;
 
+import io.dropwizard.setup.Environment;
+
 public class Trainer {
 	private ReferenceHub refHub;
 	private int openEvaluations;
 	private long trainingSessionId;
 	private long modelId;
 	private long configId;
-	private Client client;
+	private Environment environment;
+	private C3CommitteeConfiguration c3config;
 	
 	public Trainer(ReferenceHub refHub) {
 		super();
@@ -49,7 +54,8 @@ public class Trainer {
 		refHub.getModelManager().setTrainingInProgress(true);
 		Configuration config = refHub.getConfigurationManager().getByAddress(configId);
 		int folds = config.getFolds();
-		this.openEvaluations=folds;
+		//this.openEvaluations=folds;
+		this.openEvaluations=config.getAthletes().length;
 		this.modelId=modelId; // There is always only one active training session per microservice. 
 		Assignment[] assignments = refHub.getTargetFunctionManager().getAssignmentArray();
 		ArrayList<Long> relevantDocIds = new ArrayList<Long>();
@@ -81,7 +87,14 @@ public class Trainer {
 		for(int i=0;i<allIds.length;i++){
 			allIds[i]=relevantDocIds.get(i);
 		}
+		ArrayList<ArrayList<Categorization>> categorizations = new ArrayList<ArrayList<Categorization>>();
+		for(int i=0; i<config.getAthletes().length;i++){
+			ArrayList<Categorization> categorization = new ArrayList<Categorization>();
+			categorizations.add(categorization);
+			(new AthleteThread(refHub, config.getAthletes()[i],categorization,allIds,config,this, trainingSession)).run();
+		}
 		
+		/*
 		for(int i=0; i<folds;i++){
 			int start=(allIds.length/folds)*i;
 			int end=((allIds.length/folds)*(i+1));
@@ -93,9 +106,9 @@ public class Trainer {
 			long[] evaluationIds = computeModularEvaluationIds(allIds, folds, i);
 			long[] trainingIds = computeTrainingIdsFromEvaluationIds(allIds,evaluationIds);
 			
-			(new Fold(refHub, trainingIds, evaluationIds, i, modelId, trainingSession, this, configId)).start();
+			(new CommitteeFold(refHub, trainingIds, evaluationIds, i, modelId, trainingSession, this, configId)).start();
 		}	
-		
+		*/
 	}
 	
 	private long[] computeModularEvaluationIds(long[] allIds, int folds, int fold){
@@ -110,6 +123,36 @@ public class Trainer {
 			evaluationIds[i]=relevantIds.get(i);
 		}
 		return evaluationIds;
+	}
+	
+	public synchronized void computeWeights(){
+		openEvaluations--;
+		if(openEvaluations==0){
+			TrainingSession trainingSession = refHub.getEvaluationManager().getTrainingSessionByAddress(trainingSessionId);
+			String appendString="";
+			Model model = refHub.getModelManager().getModelByAddress(modelId);
+			SelectionPolicy selectionPolicy = refHub.getConfigurationManager().getByAddress(configId).getSelectionPolicy();
+			Evaluation[] evaluations = trainingSession.getEvaluationArray();
+			model.setWeights(new double[evaluations.length]);
+			for(int i=0;i<evaluations.length;i++){
+				Evaluation eval = evaluations[i];
+				if(selectionPolicy==SelectionPolicy.MicroaverageF1){
+					model.getWeights()[i]=eval.getMicroaverageF1();
+				}else if(selectionPolicy==SelectionPolicy.MicroaveragePrecision){
+					model.getWeights()[i]=eval.getMicroaveragePrecision();
+				}else if(selectionPolicy==SelectionPolicy.MicroaverageRecall){
+					model.getWeights()[i]=eval.getMicroaverageRecall();
+				}else if(selectionPolicy==SelectionPolicy.MacroaverageF1){
+					model.getWeights()[i]=eval.getMacroaverageF1();
+				}else if(selectionPolicy==SelectionPolicy.MacroaveragePrecision){
+					model.getWeights()[i]=eval.getMacroaveragePrecision();
+				}else if(selectionPolicy==SelectionPolicy.MacroaverageRecall){
+					model.getWeights()[i]=eval.getMacroaverageRecall();
+				}
+			}
+			model.setWeights(Utilities.normalizeVector(model.getWeights()));
+			refHub.getModelManager().setTrainingInProgress(false);
+		}
 	}
 	
 	public synchronized void selectBestEvaluation(){
@@ -177,17 +220,20 @@ public class Trainer {
 		}
 	}
 
-
-
-	public Client getClient() {
-		return client;
+	public Environment getEnvironment() {
+		return environment;
 	}
 
-
-
-	public void setClient(Client client) {
-		this.client = client;
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
 	}
-	
+
+	public C3CommitteeConfiguration getC3config() {
+		return c3config;
+	}
+
+	public void setC3config(C3CommitteeConfiguration c3config) {
+		this.c3config = c3config;
+	}
 	
 }
