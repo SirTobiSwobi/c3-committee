@@ -61,6 +61,7 @@ public class AthleteThread extends Thread {
 			System.out.println(response.toString());
 			String responseBody = response.readEntity(String.class);
 			System.out.println(responseBody);
+			refHub.getModelManager().getModelByAddress(trainer.getModelId()).incrementCompletedSteps();
 		}
 		for(int i=0; i<trainingIds.length; i++){
 			Document doc = refHub.getDocumentManager().getByAddress(trainingIds[i]);
@@ -89,6 +90,7 @@ public class AthleteThread extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			refHub.getModelManager().getModelByAddress(trainer.getModelId()).incrementCompletedSteps();
 			
 		}
 		

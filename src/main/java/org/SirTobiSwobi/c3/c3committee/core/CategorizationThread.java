@@ -6,8 +6,8 @@ import org.SirTobiSwobi.c3.c3committee.db.ReferenceHub;
 import org.SirTobiSwobi.c3.c3committee.db.SearchDirection;
 
 public class CategorizationThread extends Thread {
-	private ReferenceHub refHub;
-	private Document document;
+	protected ReferenceHub refHub;
+	protected Document document;
 
 	public CategorizationThread(ReferenceHub refHub, long docId) {
 		super();

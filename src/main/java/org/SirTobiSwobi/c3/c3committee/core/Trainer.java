@@ -8,14 +8,17 @@ import javax.ws.rs.client.Client;
 import org.SirTobiSwobi.c3.c3committee.C3CommitteeConfiguration;
 import org.SirTobiSwobi.c3.c3committee.db.Assignment;
 import org.SirTobiSwobi.c3.c3committee.db.Categorization;
+import org.SirTobiSwobi.c3.c3committee.db.CategorizationManager;
 import org.SirTobiSwobi.c3.c3committee.db.Category;
 import org.SirTobiSwobi.c3.c3committee.db.Configuration;
+import org.SirTobiSwobi.c3.c3committee.db.Document;
 import org.SirTobiSwobi.c3.c3committee.db.Evaluation;
 import org.SirTobiSwobi.c3.c3committee.db.Model;
 import org.SirTobiSwobi.c3.c3committee.db.ReferenceHub;
 import org.SirTobiSwobi.c3.c3committee.db.SelectionPolicy;
 import org.SirTobiSwobi.c3.c3committee.db.TrainingSession;
 
+import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Environment;
 
 public class Trainer {
@@ -26,6 +29,8 @@ public class Trainer {
 	private long configId;
 	private Environment environment;
 	private C3CommitteeConfiguration c3config;
+	private long[] allIds;
+	private Client client;
 	
 	public Trainer(ReferenceHub refHub) {
 		super();
@@ -80,8 +85,8 @@ public class Trainer {
 			allIds[i]=allDocs[i].getId();
 		}
 		*/
-		long[] allIds = new long[relevantDocIds.size()];
-		int overallSteps = allIds.length*folds;
+		allIds = new long[relevantDocIds.size()];
+		int overallSteps = allIds.length*2*config.getAthletes().length+allIds.length;
 		refHub.getModelManager().getModelByAddress(modelId).setSteps(overallSteps);
 		
 		for(int i=0;i<allIds.length;i++){
@@ -150,7 +155,33 @@ public class Trainer {
 					model.getWeights()[i]=eval.getMacroaverageRecall();
 				}
 			}
-			model.setWeights(Utilities.normalizeVector(model.getWeights()));
+			model.setWeights(Utilities.sumVectorOne(model.getWeights()));
+			CategorizationManager evalCznMan = new CategorizationManager();
+			for(int i=0;i<allIds.length;i++){
+				Document doc = refHub.getDocumentManager().getByAddress(allIds[i]);
+				ArrayList<Categorization> categorizations = CommitteeThread.performCategorization(doc, refHub.getCategoryManager().getCategoryArray(), model, client);
+				for(int j=0;j<categorizations.size();j++){
+					evalCznMan.addCategorizationWithoutId(categorizations.get(j).getDocumentId(), categorizations.get(j).getCategoryId(), categorizations.get(j).getProbability());
+				}
+				model.incrementCompletedSteps();
+			}
+			
+			Assignment[] relevantAssignments=null;
+			for(int i=0; i<allIds.length; i++){
+				relevantAssignments = Utilities.arrayUnionWithoutDuplicates(relevantAssignments, refHub.getTargetFunctionManager().getDocumentAssignments(allIds[i])); 
+			}
+			Configuration config = refHub.getConfigurationManager().getByAddress(configId);
+			//trainingSession.setFoldEvaluations(new ArrayList<Evaluation>());
+			Evaluation eval = new Evaluation(	relevantAssignments, 
+					evalCznMan.getCategorizationArray(), 
+					refHub.getCategoryManager().getCategoryArray(), 
+					refHub.getCategoryManager().getRelationshipArray(), 
+					refHub.getDocumentManager().getDocumentArray(),  
+					"Final evaluation of all utilized athletes",
+					config.isIncludeImplicits(), 
+					config.getAssignmentThreshold(),
+					trainingSession,
+					config.getFolds());			
 			refHub.getModelManager().setTrainingInProgress(false);
 		}
 	}
@@ -235,5 +266,25 @@ public class Trainer {
 	public void setC3config(C3CommitteeConfiguration c3config) {
 		this.c3config = c3config;
 	}
+
+	public long getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(long modelId) {
+		this.modelId = modelId;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	
+	
+	
 	
 }

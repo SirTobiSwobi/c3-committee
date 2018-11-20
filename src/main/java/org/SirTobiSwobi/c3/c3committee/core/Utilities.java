@@ -6,6 +6,7 @@ import org.SirTobiSwobi.c3.c3committee.api.TCAthlete;
 import org.SirTobiSwobi.c3.c3committee.db.Assignment;
 import org.SirTobiSwobi.c3.c3committee.db.Athlete;
 import org.SirTobiSwobi.c3.c3committee.db.Document;
+import org.SirTobiSwobi.c3.c3committee.db.Category;
 
 public class Utilities {
 	
@@ -223,5 +224,27 @@ public class Utilities {
 		}
 		return vector;
 	}
+	
+	public static double[] sumVectorOne(double[] vector){
+		double sum=0.0;
+		for(int i=0;i<vector.length;i++){
+			sum+=vector[i];
+		}
+		for(int i=0;i<vector.length;i++){
+			vector[i]=vector[i]/sum;
+		}
+		return vector;
+	}
+	
+	public static int getIndexOfCatIdInArray(Category[] categories, long catId){
+		int index=-1;
+		for(int i=0;i<categories.length;i++){
+			if(categories[i].getId()==catId){
+				index=i;
+			}
+		}
+		return index;
+	}
+	
 	
 }

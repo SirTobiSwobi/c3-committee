@@ -91,12 +91,14 @@ public class C3CommitteeApplication extends Application<C3CommitteeConfiguration
 		trainer.setEnvironment(environment);
 		Classifier classifier = new Classifier(refHub);
 		
+		
 		/*
 		 * Initializing HTTP client
 		 */
 		
 		final Client client = new JerseyClientBuilder(environment).using(configuration.getJerseyClientConfiguration()).build(getName());
-		
+		classifier.setClient(client);
+		trainer.setClient(client);
 		
 		/*
 		 * Initializing resources requiring data structures and clients. 
@@ -158,8 +160,8 @@ public class C3CommitteeApplication extends Application<C3CommitteeConfiguration
 		environment.jersey().register(retraining);
 		
 		Athlete[] athletes = new Athlete[2];
-		athletes[0]=new Athlete(0,"http://localhost:8082","tfidf-svm classifier using default configuration");
-		athletes[1]=new Athlete(1,"http://localhost:8084","ntfc using default configuration");
+		athletes[0]=new Athlete(0,"http://localhost:8082","tfidf-svm classifier using default configuration with linear kernel");
+		athletes[1]=new Athlete(1,"http://localhost:8084","tfidf-svm classifier using default configuration with rbf kernel");
 		Configuration cfgn = new Configuration(1,3, true, 0.5,SelectionPolicy.MicroaverageF1, athletes);
 		confMan.setConfiguration(cfgn);
 		

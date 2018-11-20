@@ -63,6 +63,9 @@ public class TrainingSession {
 		Evaluation[] evalArray = foldEvaluations.toArray(new Evaluation[0]);
 		return evalArray;
 	}
+	public void setFoldEvaluations(ArrayList<Evaluation> foldEvaluations) {
+		this.foldEvaluations = foldEvaluations;
+	}
 	
 	
 	
