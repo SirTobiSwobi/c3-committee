@@ -26,9 +26,5 @@ public class TCAssignment {
 	@JsonProperty
 	public long getCategoryId() {
 		return categoryId;
-	}
-	
-	
-	
-	
+	}	
 }

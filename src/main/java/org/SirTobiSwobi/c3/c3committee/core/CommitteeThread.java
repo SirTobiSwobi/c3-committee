@@ -1,6 +1,8 @@
 package org.SirTobiSwobi.c3.c3committee.core;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Client;
@@ -38,7 +40,7 @@ public class CommitteeThread extends CategorizationThread {
 		ArrayList<Categorization> categorizations = CommitteeThread.performCategorization(document, categories, model, client);
 		for(int i=0;i<categorizations.size();i++){
 			refHub.getCategorizationManager().addCategorizationWithoutId(categorizations.get(i).getDocumentId(), 
-					categorizations.get(i).getCategoryId(), categorizations.get(i).getProbability());
+					categorizations.get(i).getCategoryId(), categorizations.get(i).getProbability(), categorizations.get(i).getExplanation());
 		}
 	}
 	
@@ -52,8 +54,10 @@ public class CommitteeThread extends CategorizationThread {
 			for(int j=0;j<probabilities.length;j++){
 				probabilities[j][i]=0.0;
 			}
+			
 			WebTarget target = client.target(athlete.getUrl()).path("categorizations");
 			Response response = target.request().post(Entity.json(doc));
+			
 			System.out.println(response.toString());
 			String responseBody = response.readEntity(String.class);
 			System.out.println(responseBody);
@@ -87,7 +91,12 @@ public class CommitteeThread extends CategorizationThread {
 				sumCategoryLikelyhood+=probabilities[i][j];
 			}
 			if(sumCategoryLikelyhood>=model.getConfiguration().getAssignmentThreshold()){
-				Categorization cat = new Categorization(-1, doc.getId(), categories[i].getId(),sumCategoryLikelyhood);
+				String explanation="The committee assigned the document to this category because the sum of likelihoods "+sumCategoryLikelyhood
+						+ " to belong to this category was higher than the assignment threshold "+model.getConfiguration().getAssignmentThreshold()+". Used classifiers: ";
+				for(int j=0;j<athletes.length;j++){
+					explanation+=athletes[j].getUrl()+" ";
+				}
+				Categorization cat = new Categorization(-1, doc.getId(), categories[i].getId(),sumCategoryLikelyhood, explanation);
 				categorizations.add(cat);
 			}
 		}

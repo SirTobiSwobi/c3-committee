@@ -30,7 +30,7 @@ public class CategorizationThread extends Thread {
 		for(int i=0;i<categories.length;i++){
 			if(categories[i].getId()%2==document.getId()%2){ //if both, the document and the category ID are odd or even.
 				if(!refHub.getCategorizationManager().containsCategorizationOf(document.getId(), categories[i].getId())){ //only assign if not already there
-					refHub.getCategorizationManager().addCategorizationWithoutId(document.getId(), categories[i].getId(), 0.8);
+					refHub.getCategorizationManager().addCategorizationWithoutId(document.getId(), categories[i].getId(), 0.8, "");
 				}
 				
 				if(refHub.getActiveModel().getConfiguration().isIncludeImplicits()){ //if implicits are to be assigned
@@ -38,7 +38,7 @@ public class CategorizationThread extends Thread {
 					if(implicitCategorizations!=null){
 						for(int k=0; k<implicitCategorizations.length; k++){
 							if(!refHub.getCategorizationManager().containsCategorizationOf(document.getId(), implicitCategorizations[k])){
-								refHub.getCategorizationManager().addCategorizationWithoutId(document.getId(), implicitCategorizations[k], 0.8);
+								refHub.getCategorizationManager().addCategorizationWithoutId(document.getId(), implicitCategorizations[k], 0.8, "");
 							}
 						}
 					}

@@ -75,8 +75,8 @@ public class AthleteThread extends Thread {
 				TCCategorizations retrieved =  MAPPER.readValue(responseBody, TCCategorizations.class);
 				for(int j=0; j<retrieved.getCategorizations().length;j++){
 					TCCategorization cat = retrieved.getCategorizations()[j];
-					categorizations.add(new Categorization(cat.getId(), cat.getDocumentId(), cat.getCategoryId(), cat.getProbability()));
-					evalCznMan.addCategorizationWithoutId(cat.getDocumentId(), cat.getCategoryId(), cat.getProbability());
+					categorizations.add(new Categorization(cat.getId(), cat.getDocumentId(), cat.getCategoryId(), cat.getProbability(), cat.getExplanation()));
+					evalCznMan.addCategorizationWithoutId(cat.getDocumentId(), cat.getCategoryId(), cat.getProbability(), cat.getExplanation());
 					System.out.println(categorizations.get(categorizations.size()-1).getDocumentId()+" "+
 							categorizations.get(categorizations.size()-1).getCategoryId());
 				}

@@ -161,7 +161,7 @@ public class Trainer {
 				Document doc = refHub.getDocumentManager().getByAddress(allIds[i]);
 				ArrayList<Categorization> categorizations = CommitteeThread.performCategorization(doc, refHub.getCategoryManager().getCategoryArray(), model, client);
 				for(int j=0;j<categorizations.size();j++){
-					evalCznMan.addCategorizationWithoutId(categorizations.get(j).getDocumentId(), categorizations.get(j).getCategoryId(), categorizations.get(j).getProbability());
+					evalCznMan.addCategorizationWithoutId(categorizations.get(j).getDocumentId(), categorizations.get(j).getCategoryId(), categorizations.get(j).getProbability(), "");
 				}
 				model.incrementCompletedSteps();
 			}

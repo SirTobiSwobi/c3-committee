@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.SirTobiSwobi.c3</groupId>
   <artifactId>c3-committee</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>c3-committee</name>
   <description>committee classifier trainer athlete implementation that is using other classifiers implementing the c3 classifier-trainer API.</description>
   <properties>
