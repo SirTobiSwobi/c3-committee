@@ -13,3 +13,4 @@ Version change log:
 - 0.0.3: implemented training using external athletes
 - 0.0.4: implemented evaluation for athletes and combined metric. Implemented regular classification.
 - 1.0.0: implemented explanation.
+- 1.0.1: updated JS library for specificity

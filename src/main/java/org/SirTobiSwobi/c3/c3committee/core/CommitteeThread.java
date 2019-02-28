@@ -91,7 +91,7 @@ public class CommitteeThread extends CategorizationThread {
 				sumCategoryLikelyhood+=probabilities[i][j];
 			}
 			if(sumCategoryLikelyhood>=model.getConfiguration().getAssignmentThreshold()){
-				String explanation="The committee assigned the document to this category because the sum of likelihoods "+sumCategoryLikelyhood
+				String explanation="The committee assigned the document to this category because the sum of all reported likelihoods "+sumCategoryLikelyhood
 						+ " to belong to this category was higher than the assignment threshold "+model.getConfiguration().getAssignmentThreshold()+". Used classifiers: ";
 				for(int j=0;j<athletes.length;j++){
 					explanation+=athletes[j].getUrl()+" ";
