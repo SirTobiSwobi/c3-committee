@@ -1,4 +1,7 @@
-Classifier committee using services and itself implementing the classifier trainer API of the athlete/trainer pattern. 
+# C3-Committee
+This repository contains a contribution of the PhD Thesis *Bootstrapping Explainable Text Categorization in Emergent Knowledge-Domains* by Tobias Eljasik-Swoboda submitted to the University of Hagen, Germany on November 30th, 2020. Date of oral examiniation: March 2nd, 2021. 
+
+Classifier committee using Athlete services and itself implementing the classifier trainer API of the Trainer/Athlete pattern. 
 
 See c3-committee.yml config file for metadata about the microservice. The same metadata can be accesses by calling /metadata of the running service. 
 
