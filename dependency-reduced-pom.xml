@@ -55,7 +55,7 @@
     </plugins>
   </build>
   <properties>
-    <dropwizard.version>1.3.5</dropwizard.version>
+    <dropwizard.version>2.0.0</dropwizard.version>
   </properties>
 </project>
 

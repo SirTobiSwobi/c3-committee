@@ -61,10 +61,10 @@ debugExamples: false
 server:
   applicationConnectors:
   - type: http
-    port: 8080	#Here you can specify the service port of this C3 Committee instance. One can communicate with it through this port.
+    port: 8082	#Here you can specify the service port of this C3 Committee instance. One can communicate with it through this port.
   adminConnectors:
   - type: http 
-    port: 8081 #Here you can specify the admin port of the C3 Committee instance
+    port: 8083 #Here you can specify the admin port of the C3 Committee instance
 #Jersey client settings
 jerseyClient:
   #The maximum idle time for a connection

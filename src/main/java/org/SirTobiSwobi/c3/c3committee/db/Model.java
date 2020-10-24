@@ -8,6 +8,7 @@ public class Model {
 	private String trainingLog; //for API development purposed. Optional for actual model. Stores progress of the training.
 	private Configuration configuration;
 	private double[] weights;
+	private int trainingSetSize;
 	
 	public Model(long id, Configuration configuration) {
 		super();
@@ -92,6 +93,16 @@ public class Model {
 
 	public void setWeights(double[] weights) {
 		this.weights = weights;
+	}
+
+	public int getTrainingSetSize() {
+		return trainingSetSize;
+	}
+
+	public void setTrainingSetSize(int trainingSetSize) {
+		this.trainingSetSize = trainingSetSize;
 	}	
+	
+	
 	
 }

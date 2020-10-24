@@ -28,6 +28,15 @@ $.getJSON("../configurations/"+confId,function(json){
 		$("#list").append("<li>Include Implicits: "+json.includeImplicits+"</li>");
 		$("#list").append("<li>Assignment Threshold: "+json.assignmentThreshold+"</li>");
 		$("#list").append("<li>Selection Policy: "+json.selectionPolicy+"</li>");
+		$("#list").append("<ul>");
+		if(json.athletes!=null){
+			for(var i=0;i<json.athletes.length;i++){
+				$("#list").append("<li>Athlete id: "+json.athletes[i].id+"</li>");
+				$("#list").append("<li>Athlete url: "+json.athletes[i].url+"</li>");
+				$("#list").append("<li>Athlete description: "+json.athletes[i].description+"</li>");
+			}
+		}
+		$("#list").append("</ul>");
 		$("#list").append("</ul>");
 	}
 });
@@ -39,6 +48,7 @@ function createConfiguration(form){
 				", \"includeImplicits\":"+form[2].value+
 				", \"assignmentThreshold\":"+form[3].value+
 				", \"selectionPolicy\": \""+form[4].value+"\""+
+				", \"athletes\": "+form[5].value+
 				" }]}";
 	console.log(json);
 	
@@ -61,11 +71,13 @@ function createConfiguration(form){
 }
 
 function updateConfiguration(form){
+	
 	var json = "{ \"id\":"+form[0].value+
 				", \"folds\":"+form[1].value+
 				", \"includeImplicits\":"+form[2].value+
 				", \"assignmentThreshold\":"+form[3].value+
 				", \"selectionPolicy\": \""+form[4].value+"\""+
+				", \"athletes\": "+form[5].value+
 				" }";
 	console.log(json);
 	
@@ -232,6 +244,23 @@ function renderModel(modId){
 		$("#list").append("Folds:"+json.configuration.folds+"<br/>");
 		$("#list").append("IncludeImplicits:"+json.configuration.includeImplicits+"<br/>");
 		$("#list").append("SelectionPolicy:"+json.configuration.selectionPolicy+"<br/>");
+		$("#list").append("Assignment Threshold: "+json.configuration.assignmentThreshold+"<br/>");
+		if(json.configuration.athletes!=null){
+			$("#list").append("Athletes: <ul>")
+			for(var i=0;i<json.configuration.athletes.length;i++){
+				$("#list").append("<li>Athlete id: "+json.configuration.athletes[i].id+"</li>");
+				$("#list").append("<li>Athlete url: "+json.configuration.athletes[i].url+"</li>");
+				$("#list").append("<li>Athlete description: "+json.configuration.athletes[i].description+"</li>");
+			}
+			$("#list").append("</ul>")
+		}
+		if(json.weights!=null){
+			$("#list").append("Athletes: <ul>")
+			for(var i=0;i<json.weights.length;i++){
+				$("#list").append("<li>Athlete id: "+json.weights[i]+"</li>");
+			}
+			$("#list").append("</ul>")
+		}
 		
 	}).fail(function(){
 		$("#list").empty();
@@ -254,6 +283,23 @@ function renderActiveModel(){
 		$("#list").append("Folds:"+json.configuration.folds+"<br/>");
 		$("#list").append("IncludeImplicits:"+json.configuration.includeImplicits+"<br/>");
 		$("#list").append("SelectionPolicy:"+json.configuration.selectionPolicy+"<br/>");
+		$("#list").append("Assignment Threshold: "+json.configuration.assignmentThreshold+"<br/>");
+		if(json.configuration.athletes!=null){
+			$("#list").append("Athletes: <ul>")
+			for(var i=0;i<json.configuration.athletes.length;i++){
+				$("#list").append("<li>Athlete id: "+json.configuration.athletes[i].id+"</li>");
+				$("#list").append("<li>Athlete url: "+json.configuration.athletes[i].url+"</li>");
+				$("#list").append("<li>Athlete description: "+json.configuration.athletes[i].description+"</li>");
+			}
+			$("#list").append("</ul>")
+		}
+		if(json.weights!=null){
+			$("#list").append("Athletes: <ul>")
+			for(var i=0;i<json.weights.length;i++){
+				$("#list").append("<li>Athlete id: "+json.weights[i]+"</li>");
+			}
+			$("#list").append("</ul>")
+		}
 		
 	}).fail(function(){
 		$("#list").empty();

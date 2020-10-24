@@ -85,7 +85,7 @@ public class ModelResource {
 		}
 		TCConfiguration configuration = new TCConfiguration(conf.getId(), conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(),
 				selectionPolicy, athletes);
-		TCModel output = new TCModel(model.getId(), model.getConfiguration().getId(), model.getProgress(), model.getTrainingLog(), configuration, model.getWeights());
+		TCModel output = new TCModel(model.getId(), model.getConfiguration().getId(), model.getProgress(), model.getTrainingLog(), configuration, model.getWeights(),model.getTrainingSetSize());
 		return output;
 	}
 }

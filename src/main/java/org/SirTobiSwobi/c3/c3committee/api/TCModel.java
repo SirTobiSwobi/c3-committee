@@ -9,12 +9,13 @@ public class TCModel {
 	private String trainingLog;
 	private TCConfiguration configuration;
 	private double[] weights;
+	private int trainingSetSize;
 	
 	public TCModel(){
 		//Jackson deserialization
 	}
 
-	public TCModel(long id, long configurationId, double progress, String trainingLog, TCConfiguration configuration, double[] weights) {
+	public TCModel(long id, long configurationId, double progress, String trainingLog, TCConfiguration configuration, double[] weights, int trainingSetSize) {
 		super();
 		this.id = id;
 		this.configurationId = configurationId;
@@ -22,6 +23,7 @@ public class TCModel {
 		this.trainingLog = trainingLog;
 		this.configuration = configuration;
 		this.weights = weights;
+		this.trainingSetSize=trainingSetSize;
 	}
 	
 	@JsonProperty
@@ -53,5 +55,17 @@ public class TCModel {
 	public double[] getWeights() {
 		return weights;
 	}
+
+	@JsonProperty
+	public int getTrainingSetSize() {
+		return trainingSetSize;
+	}
+
+	@JsonProperty
+	public void setTrainingSetSize(int trainingSetSize) {
+		this.trainingSetSize = trainingSetSize;
+	}
+	
+	
 		
 }

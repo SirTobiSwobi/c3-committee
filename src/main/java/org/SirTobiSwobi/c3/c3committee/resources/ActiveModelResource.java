@@ -103,17 +103,17 @@ public class ActiveModelResource {
 		}else if(model!=null){
 			TCConfiguration configuration = model.getConfiguration();
 			SelectionPolicy selectionPolicy = SelectionPolicy.MicroaverageF1;
-			if(configuration.getSelectionPolicy().equals("MicroaverageF1")){
+			if("MicroaverageF1".equals(configuration.getSelectionPolicy())){
 				selectionPolicy=SelectionPolicy.MicroaverageF1;
-			}else if(configuration.getSelectionPolicy().equals("MicroaveragePrecision")){
+			}else if("MicroaveragePrecision".equals(configuration.getSelectionPolicy())){
 				selectionPolicy=SelectionPolicy.MicroaveragePrecision;
-			}else if(configuration.getSelectionPolicy().equals("MicroaverageRecall")){
+			}else if("MicroaverageRecall".equals(configuration.getSelectionPolicy())){
 				selectionPolicy=SelectionPolicy.MicroaverageRecall;
-			}else if(configuration.getSelectionPolicy().equals("MacroaverageF1")){
+			}else if("MacroaverageF1".equals(configuration.getSelectionPolicy())){
 				selectionPolicy=SelectionPolicy.MacroaverageF1;
-			}else if(configuration.getSelectionPolicy().equals("MacroaveragePrecision")){
+			}else if("MacroaveragePrecision".equals(configuration.getSelectionPolicy())){
 				selectionPolicy=SelectionPolicy.MacroaveragePrecision;
-			}else if(configuration.getSelectionPolicy().equals("MacroaverageRecall")){
+			}else if("MacroaverageRecall".equals(configuration.getSelectionPolicy())){
 				selectionPolicy=SelectionPolicy.MacroaverageRecall;
 			}
 			Configuration conf = new Configuration(configuration.getId(), configuration.getFolds(), configuration.isIncludeImplicits(), configuration.getAssignmentThreshold(),

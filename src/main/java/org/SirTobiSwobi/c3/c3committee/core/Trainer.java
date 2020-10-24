@@ -96,7 +96,7 @@ public class Trainer {
 		for(int i=0; i<config.getAthletes().length;i++){
 			ArrayList<Categorization> categorization = new ArrayList<Categorization>();
 			categorizations.add(categorization);
-			(new AthleteThread(refHub, config.getAthletes()[i],categorization,allIds,config,this, trainingSession)).run();
+			(new AthleteThread(refHub, config.getAthletes()[i],categorization,allIds,config,this, trainingSession)).start();
 		}
 		
 		/*
@@ -156,6 +156,7 @@ public class Trainer {
 				}
 			}
 			model.setWeights(Utilities.sumVectorOne(model.getWeights()));
+			model.setTrainingSetSize(this.allIds.length);
 			CategorizationManager evalCznMan = new CategorizationManager();
 			for(int i=0;i<allIds.length;i++){
 				Document doc = refHub.getDocumentManager().getByAddress(allIds[i]);

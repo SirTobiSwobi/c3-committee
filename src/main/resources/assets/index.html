@@ -4,12 +4,31 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 	
-	Software: Tobias Eljasik-Swoboda
-	License: TBD.
+	Software: MIT License
+
+	Copyright (c) 2020 Tobias Eljasik-Swoboda
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 -->
 <html>
 	<head>
-		<title>C3 Classifier Trainer API</title>
+		<title>C3 Committee</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -20,7 +39,7 @@
 		<div id="wrapper">
 			<!-- Header -->
 					<header id="header" class="alt">
-						<a href="index.html" class="logo"><strong>C3 Classifier Trainer API</strong> <span>by Tobias Eljasik-Swoboda</span></a>
+						<a href="index.html" class="logo"><strong>C3 Committee</strong> <span>by Tobias Eljasik-Swoboda</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -48,10 +67,12 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>C3 Classifier Trainer API</h1>
+								<h1>C3 Committee</h1>
 							</header>
 							<div class="content">
-								<p>This microservice is an abstract implementation of the C3 Classifier-Trainer API. Microservices are based on it.</p>
+								<p>This microservice forms a committee based on other C3 microservices that implement the Athlete API.
+									Models are created by evaluating individual microservices so that their effectiveness is known and 
+									wheights can be based on them.</p>
 								<ul class="actions">
 									<li><a href="#one" class="button next scrolly">Get Started</a></li>
 								</ul>
@@ -132,7 +153,7 @@
 									<header class="major">
 										<h3><a href="models.html" class="link">/models</a></h3>
 										<p>Models are generated, when the trainer learns a representation from the existing examples. 
-										These models can then be shared with other athlete services that implement the same model. Generating models triggers training, </p>
+										These models can then be shared with other Athlete services that implement the same model. Generating models triggers training, </p>
 									</header>
 								</article>
 								<article>
@@ -151,7 +172,7 @@
 									</span>
 									<header class="major">
 										<h3><a href="activeModel.html" class="link">/model</a></h3>
-										<p>Every trainer service can also serve as athlete service. Every athlete service needs to select one active model that is used for every 
+										<p>Every trainer service can also serve as Athlete service. Every Athlete service needs to select one active model that is used for every 
 										categorization.</p>
 									</header>
 								</article>
@@ -183,7 +204,7 @@
 										<h2>Classifier-Trainer</h2>
 									</header>
 									<p>A classifier assigns documents to categories based on their content by employing machine learning. 
-									This service is part of the Classifier Trainer/Athlete pattern developed by Tobias Eljasik-Swoboda. 
+									This service is part of the C3 suite of microservices implementing the Trainer/Athlete pattern developed by Tobias Eljasik-Swoboda. 
 									A Trainer Service uses machine learning to learn from existing document-to-category assignments. After having learned from these examples,
 									an Athlete Service can use these insights to perform classifications. This facilitates Scale-Out.
 									A Trainer Service always includes an Athlete Service. Each C3 Service is available as JAR file and Docker Container. This makes them runable anywhere.
@@ -227,10 +248,10 @@
 					<footer id="footer">
 						<div class="inner">
 							<ul class="icons">
-								<li><a href="https://github.com/SirTobiSwobi/classifier-trainer" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+								<li><a href="https://github.com/SirTobiSwobi/c3-committee" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
 							</ul>
 							<ul class="copyright">
-								<li>&copy; Software License TBD. By Tobias Eljasik-Swoboda</li><li>Visual design: <a href="https://html5up.net">HTML5 UP</a> released under Creative Commons.</li>
+								<li>&copy; Software by Tobias Eljasik-Swoboda under <a href="license.html">MIT License</a></li><li>Visual design: <a href="https://html5up.net">HTML5 UP</a> released under Creative Commons.</li>
 							</ul>
 						</div>
 					</footer>

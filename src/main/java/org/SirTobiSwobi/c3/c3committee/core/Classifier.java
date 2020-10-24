@@ -20,7 +20,7 @@ public class Classifier {
 			categorizationPossible=true;
 		}
 		if(categorizationPossible){
-			new CommitteeThread(refHub,docId,client).run();
+			new CommitteeThread(refHub,docId,client).start();
 		}
 		return categorizationPossible;
 	}
